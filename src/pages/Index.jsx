@@ -3,18 +3,23 @@ import ChatApp from '../components/ChatApp';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Index = () => {
   const [username, setUsername] = useState('');
   const [inRoom, setInRoom] = useState(false);
+  const [warning, setWarning] = useState('');
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
+    setWarning('');
   };
 
   const handleJoinRoom = () => {
     if (username.trim()) {
       setInRoom(true);
+    } else {
+      setWarning('Please enter a username before joining.');
     }
   };
 
@@ -39,7 +44,12 @@ const Index = () => {
               onChange={handleUsernameChange}
               className="max-w-xs mx-auto"
             />
-            <Button onClick={handleJoinRoom}>Join Room</Button>
+            {warning && (
+              <Alert variant="destructive" className="max-w-xs mx-auto">
+                <AlertDescription>{warning}</AlertDescription>
+              </Alert>
+            )}
+            <Button onClick={handleJoinRoom}>Join</Button>
           </div>
         </div>
       ) : (
