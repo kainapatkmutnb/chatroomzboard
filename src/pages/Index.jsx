@@ -3,12 +3,11 @@ import ChatApp from '../components/ChatApp';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { Trash2 } from "lucide-react";
 
 const Index = () => {
   const [username, setUsername] = useState('');
   const [inRoom, setInRoom] = useState(false);
-  const [rooms, setRooms] = useState([
+  const [rooms] = useState([
     { id: 1, name: 'General' },
     { id: 2, name: 'Random' },
     { id: 3, name: 'Tech Talk' },
@@ -27,10 +26,6 @@ const Index = () => {
   const handleLeaveRoom = () => {
     setInRoom(false);
     setUsername('');
-  };
-
-  const deleteRoom = (id) => {
-    setRooms(rooms.filter(room => room.id !== id));
   };
 
   return (
@@ -54,15 +49,8 @@ const Index = () => {
           <div className="w-full max-w-md">
             <h2 className="text-2xl font-bold mb-4">Available Rooms</h2>
             {rooms.map((room) => (
-              <div key={room.id} className="flex justify-between items-center bg-card p-4 rounded-lg shadow mb-4">
+              <div key={room.id} className="bg-card p-4 rounded-lg shadow mb-4">
                 <span className="text-xl">{room.name}</span>
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  onClick={() => deleteRoom(room.id)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
               </div>
             ))}
           </div>
