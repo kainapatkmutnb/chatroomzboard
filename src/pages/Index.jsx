@@ -36,7 +36,7 @@ const Index = () => {
       {!inRoom ? (
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold mb-4">Welcome to Chat Room</h1>
+            <h1 className="text-4xl font-bold mb-4">Welcome to Chat App</h1>
             <Input
               type="text"
               placeholder="Enter your username"
