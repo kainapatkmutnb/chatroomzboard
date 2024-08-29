@@ -7,11 +7,6 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 const Index = () => {
   const [username, setUsername] = useState('');
   const [inRoom, setInRoom] = useState(false);
-  const [rooms] = useState([
-    { id: 1, name: 'General' },
-    { id: 2, name: 'Random' },
-    { id: 3, name: 'Tech Talk' },
-  ]);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -35,7 +30,7 @@ const Index = () => {
       </div>
       {!inRoom ? (
         <div className="flex flex-col items-center justify-center h-screen">
-          <div className="text-center space-y-4 mb-8">
+          <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold mb-4">Welcome to Chat Room</h1>
             <Input
               type="text"
@@ -45,14 +40,6 @@ const Index = () => {
               className="max-w-xs mx-auto"
             />
             <Button onClick={handleJoinRoom}>Join Room</Button>
-          </div>
-          <div className="w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-4">Available Rooms</h2>
-            {rooms.map((room) => (
-              <div key={room.id} className="bg-card p-4 rounded-lg shadow mb-4">
-                <span className="text-xl">{room.name}</span>
-              </div>
-            ))}
           </div>
         </div>
       ) : (
