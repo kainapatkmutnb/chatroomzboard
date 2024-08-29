@@ -115,9 +115,9 @@ const ChatApp = ({ username }) => {
                               <AvatarFallback>{message.username[0]}</AvatarFallback>
                             </Avatar>
                           )}
-                          <div className={`${message.isOwnMessage ? 'bg-blue-100 rounded-lg p-2' : ''}`}>
+                          <div className={`${message.isOwnMessage ? 'bg-primary/10 dark:bg-primary/20 rounded-lg p-2' : ''}`}>
                             <div className="flex items-center">
-                              <span className={`font-bold mr-2 ${message.isOwnMessage ? 'text-blue-600' : ''}`}>
+                              <span className={`font-bold mr-2 ${message.isOwnMessage ? 'text-primary' : ''}`}>
                                 {message.isOwnMessage ? 'You' : message.username}
                               </span>
                               <Badge variant="secondary" className="text-xs">
