@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "@/components/ui/button"
+import { MicIcon, MicOffIcon, VideoIcon, VideoOffIcon } from 'lucide-react';
 
 const VideoChat = ({ roomId, username }) => {
   const [localStream, setLocalStream] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState({});
+  const [isMicOn, setIsMicOn] = useState(true);
+  const [isCameraOn, setIsCameraOn] = useState(true);
   const localVideoRef = useRef(null);
   const peerConnections = useRef({});
 
@@ -30,6 +33,22 @@ const VideoChat = ({ roomId, username }) => {
       Object.values(peerConnections.current).forEach(pc => pc.close());
     };
   }, [roomId]);
+
+  const toggleMic = () => {
+    if (localStream) {
+      const audioTrack = localStream.getAudioTracks()[0];
+      audioTrack.enabled = !audioTrack.enabled;
+      setIsMicOn(audioTrack.enabled);
+    }
+  };
+
+  const toggleCamera = () => {
+    if (localStream) {
+      const videoTrack = localStream.getVideoTracks()[0];
+      videoTrack.enabled = !videoTrack.enabled;
+      setIsCameraOn(videoTrack.enabled);
+    }
+  };
 
   // This function would be called when a new peer joins the room
   const handleNewPeer = async (peerId) => {
@@ -62,7 +81,15 @@ const VideoChat = ({ roomId, username }) => {
           }} />
         ))}
       </div>
-      <Button onClick={() => {/* Implement leave call functionality */}}>Leave Call</Button>
+      <div className="controls flex justify-center space-x-4 mt-4">
+        <Button onClick={toggleMic} variant={isMicOn ? "default" : "secondary"}>
+          {isMicOn ? <MicIcon /> : <MicOffIcon />}
+        </Button>
+        <Button onClick={toggleCamera} variant={isCameraOn ? "default" : "secondary"}>
+          {isCameraOn ? <VideoIcon /> : <VideoOffIcon />}
+        </Button>
+        <Button onClick={() => {/* Implement leave call functionality */}} variant="destructive">Leave Call</Button>
+      </div>
     </div>
   );
 };
