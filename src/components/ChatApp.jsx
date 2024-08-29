@@ -9,12 +9,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { VideoIcon, PenToolIcon } from 'lucide-react';
 import Whiteboard from './Whiteboard';
 
-const ChatApp = () => {
+const ChatApp = ({ username }) => {
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [username, setUsername] = useState('');
   const [newRoomName, setNewRoomName] = useState('');
   const [isVideoMode, setIsVideoMode] = useState(false);
 
@@ -41,8 +40,9 @@ const ChatApp = () => {
       const message = {
         id: Date.now(),
         text: newMessage,
-        username,
+        username: username,
         timestamp: new Date().toISOString(),
+        isOwnMessage: true,
       };
       setMessages([...messages, message]);
       setNewMessage('');
@@ -109,13 +109,17 @@ const ChatApp = () => {
                   <TabsContent value="chat">
                     <ScrollArea className="h-[400px] mb-4">
                       {messages.map((message) => (
-                        <div key={message.id} className="flex items-start mb-4">
-                          <Avatar className="mr-2">
-                            <AvatarFallback>{message.username[0]}</AvatarFallback>
-                          </Avatar>
-                          <div>
+                        <div key={message.id} className={`flex items-start mb-4 ${message.isOwnMessage ? 'justify-end' : ''}`}>
+                          {!message.isOwnMessage && (
+                            <Avatar className="mr-2">
+                              <AvatarFallback>{message.username[0]}</AvatarFallback>
+                            </Avatar>
+                          )}
+                          <div className={`${message.isOwnMessage ? 'bg-blue-100 rounded-lg p-2' : ''}`}>
                             <div className="flex items-center">
-                              <span className="font-bold mr-2">{message.username}</span>
+                              <span className={`font-bold mr-2 ${message.isOwnMessage ? 'text-blue-600' : ''}`}>
+                                {message.isOwnMessage ? 'You' : message.username}
+                              </span>
                               <Badge variant="secondary" className="text-xs">
                                 {new Date(message.timestamp).toLocaleTimeString()}
                               </Badge>
